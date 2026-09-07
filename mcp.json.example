@@ -1,0 +1,45 @@
+{
+  "enabled": false,
+  "servers": [
+    {
+      "name": "deepseek_eyes",
+      "transport": "stdio",
+      "enabled": false,
+      "command": "D:\\Project\\m-MCP\\deepseek-eyes\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "deepseek_eyes"],
+      "env": {},
+      "timeout_seconds": 120,
+      "allowed_tools": [
+        "analyze_image",
+        "extract_text",
+        "describe_ui",
+        "diagnose_error",
+        "understand_diagram",
+        "analyze_chart",
+        "code_from_screenshot"
+      ],
+      "subagents": ["vision_agent"]
+    },
+    {
+      "name": "knowledge",
+      "transport": "stdio",
+      "enabled": true,
+      "command": "python",
+      "args": ["-m", "knowledge_mcp_server"],
+      "env": {"KNOWLEDGE_API_KEY": "your-key-here"},
+      "timeout_seconds": 30,
+      "allowed_tools": ["*"],
+      "subagents": ["general_assistant"]
+    },
+    {
+      "name": "web",
+      "transport": "streamable-http",
+      "enabled": true,
+      "url": "http://localhost:3000/mcp",
+      "headers": {"Authorization": "Bearer your-token-here"},
+      "timeout_seconds": 30,
+      "allowed_tools": ["fetch"],
+      "subagents": ["*"]
+    }
+  ]
+}
